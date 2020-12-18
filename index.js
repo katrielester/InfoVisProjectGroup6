@@ -37,8 +37,6 @@ function draw(whichyear) {
     {name:"GroupAccommodation", value:country_values[whichyear]['Type']["Groupaccommodation"]['GuestTot']}
   ];
 
-  // console.log(country_values[whichyear]['Country']["NL"]["GuestTot"]);
-
   var country_data_vis = [
   //{name:"the Netherlands", value:country_values['2019']['Country']["NL"]["GuestTot"]},
   {name:"Germany", value:country_values[whichyear]['Country']["Germany"]["GuestTot"]},
@@ -57,6 +55,7 @@ function draw(whichyear) {
   {name:"Australia and Oceania", value:country_values[whichyear]['Country']["AustraliaandOceania"]["GuestTot"]},
   {name:"Africa", value:country_values[whichyear]['Country']["Africa"]["GuestTot"]}
   ];
+  
 //import monthly foreign tourists data from country_values
   var monthly_data = [
     {name: "Jan", value:country_values[whichyear]['Month']["Jan"]},
@@ -92,12 +91,13 @@ function draw(whichyear) {
       barHeight = Math.min(screenHeight, 300) - barMargin.top - barMargin.bottom;
 
   var barMargin2 = {top: 20, right: 60, bottom: 65, left: 20},
-  barWidth2 = Math.min(screenWidth, 300) - barMargin2.left - barMargin2.right,
-  barHeight2 = Math.min(screenHeight, 520) - barMargin2.top - barMargin2.bottom;
+    barWidth2 = Math.min(screenWidth, 300) - barMargin2.left - barMargin2.right,
+    barHeight2 = Math.min(screenHeight, 520) - barMargin2.top - barMargin2.bottom;
 
   var barMargin3 = {top: 20, right: 60, bottom: 65, left: 20},
-  barWidth3 = Math.min(screenWidth, 400) - barMargin3.left - barMargin3.right,
-  barHeight3 = Math.min(screenHeight, 250) - barMargin3.top - barMargin3.bottom;
+    barWidth3 = Math.min(screenWidth, 400) - barMargin3.left - barMargin3.right,
+    barHeight3 = Math.min(screenHeight, 250) - barMargin3.top - barMargin3.bottom;
+
   // =================
   // Set up the Map:
   // =================
@@ -163,7 +163,7 @@ function draw(whichyear) {
 
   // charts, legends and labels:
 
-    // accommodation types bar charts:           
+    // accommodation types bar chart:           
     // Create a band scale that returns the width of each bar - https://github.com/d3/d3-scale/blob/master/README.md#band_bandwidth
     var x = d3.scaleBand()
         .range([0, barWidth])
@@ -200,53 +200,33 @@ function draw(whichyear) {
       .attr("class", "y baraxis")
       .call(yAxis);
 
-  var barChart =	chart.selectAll(".bar")
-      .data(country_data_acco)
-      .enter()
-      .append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.name); })
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return barHeight - y(d.value); })
-      .attr("width", x.bandwidth());
-  
-  var text = svgMain.selectAll("text")
+    var barChart =	chart.selectAll(".bar")
         .data(country_data_acco)
-
-  text.enter()
-        .append("text")
-        .attr("fill", "white")
-        .attr("font-size", "14px")
-        .attr("text-anchor", "middle")
-        .attr("x", function(d,i){
-          return padding.left + x(i);
-        })
-        .attr("y", function(d){
-          return height-padding.bottom-y1(d);
-        })
-        .text(function(d){
-          return d.value
-        })
-  
-  //.attr("x", function(d) {return x(d.value)+x.bandwidth()/2;})
-  //.attr("y", function(d) {return y(d.value);})
-  //.style("text-anchor", "middle");
-
-    /* svgMain.selectAll("text")
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.name); })
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return barHeight - y(d.value); })
+        .attr("width", x.bandwidth());
+    
+    var text = svgMain.selectAll("text")
           .data(country_data_acco)
-          .enter()
+
+    text.enter()
           .append("text")
-          .text(function(d){
-            return d.value;
-          })
+          .attr("fill", "white")
+          .attr("font-size", "14px")
           .attr("text-anchor", "middle")
-          .attr("x", function (d,i){
-            return xScale(i)+xScale.bandwidth()/2;
+          .attr("x", function(d,i){
+            return padding.left + x(i);
           })
-          //.attr("y", function(d){
-          //  return height-scaleBand/2;
-          //})
-          .attr("fill", "white");*/
+          .attr("y", function(d){
+            return height-padding.bottom-y1(d);
+          })
+          .text(function(d){
+            return d.value
+          })
 
     // add titles to the axes
       chart.append("text")
@@ -258,26 +238,6 @@ function draw(whichyear) {
         .attr("transform", "translate("+ (barWidth/2) +","+(barHeight-215)+")")  // centre below axis
         .text("Type of accommodation")
         .style("fill", "#72789e");
-
-        /*barChart
-          .append("text")
-          .data(country_data_acco)
-          .text(function(d) { return d; })
-          .attr("y",function(d){
-            return xScale;
-          })
-          .attr("x", barWidth / 2) // center horizontally in bar
-*/
-       /* svgMain.selectAll("rect")
-          .data(country_data_acco)
-          .enter()
-          .append("text")
-          .text(function(country_data_acco) {return country_data_acco.value;})
-          //.attr("x", function(d){
-          //  return d.value;
-          //})
-          .attr("fill","white")
-          .attr("text-anchor", "middle");*/
 
 // visitors countries horizontal bar charts:  
 // Create a linear scale that returns the width of each bar - https://github.com/d3/d3-scale/blob/master/README.md#band_bandwidth
@@ -305,7 +265,7 @@ function draw(whichyear) {
 
 //sort the foreign guests data in descending order
   sorted_data = country_data_vis.slice().sort((a,b) => d3.descending(a.value, b.value));
-
+  console.log(sorted_data);
   x2.domain([0, d3.max(sorted_data , function(d) { return d.value; })]);
   y2.domain(sorted_data.map(function(d) { return d.name; }));
 
@@ -325,8 +285,8 @@ function draw(whichyear) {
     .enter()
     .append("rect")
     .attr("class", "bar")
-    .attr("x2", function(d) { return x2(d.value); })
-    .attr("y2", function(d) { return y2(d.name); })
+    .attr("x", 0)
+    .attr("y", function(d) { return y2(d.name); })
     .attr("height", y2.bandwidth())
     .attr("width", function(d) { return  x2(d.value); });
 
@@ -338,67 +298,67 @@ function draw(whichyear) {
   chart2.append("text")
     .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
     .attr("transform", "translate("+ (barWidth2/2) +")")  // centre below axis
-    .text("Visitors' Countries of Resident")
+    .text("Visitors' Countries of Origins")
     .style("fill", "#72789e");
 
-  var x3 = d3.scaleBand()
-    .range([0, barWidth3])
-    .padding(.1); // adds padding between bars
-  
-  // Create a linear scale that returns the height of each bar - https://github.com/d3/d3-scale#linear-scales
-  var y3 = d3.scaleLinear()
-    .range([barHeight3, 0]);
+    // MONTHLY GUEST BAR CHART
+    var x3 = d3.scaleBand()
+      .range([0, barWidth3])
+      .padding(.1); // adds padding between bars
+    
+    // Create a linear scale that returns the height of each bar - https://github.com/d3/d3-scale#linear-scales
+    var y3 = d3.scaleLinear()
+      .range([barHeight3, 0]);
 
-// Add x and y axis
-  var xAxis3 = d3.axisBottom(x3)
-  var yAxis3 = d3.axisLeft(y3)
-    .ticks(6, "s");
-  
-// set the width and height of the SVG element to the outer dimensions 
-// and add a g element to offset the origin of the chart area by the top-left margin
-  var chart3 = svgMain.append("g")
-    .attr("width", barWidth3 + barMargin3.left + barMargin3.right)
-    .attr("height", barHeight3 + barMargin3.top + barMargin3.bottom)
-    .attr("id", "chart")
-    .attr("transform", "translate(" + (50) + "," + 320+ ")")
-    .append("g")
-    .attr("transform", "translate(" + barMargin3.left + "," + barMargin3.top + ")");
+  // Add x and y axis
+    var xAxis3 = d3.axisBottom(x3)
+    var yAxis3 = d3.axisLeft(y3)
+      .ticks(6, "s");
+    
+  // set the width and height of the SVG element to the outer dimensions 
+  // and add a g element to offset the origin of the chart area by the top-left margin
+    var chart3 = svgMain.append("g")
+      .attr("width", barWidth3 + barMargin3.left + barMargin3.right)
+      .attr("height", barHeight3 + barMargin3.top + barMargin3.bottom)
+      .attr("id", "chart")
+      .attr("transform", "translate(" + (50) + "," + 320+ ")")
+      .append("g")
+      .attr("transform", "translate(" + barMargin3.left + "," + barMargin3.top + ")");
 
-  x3.domain(monthly_data.map(function(d) { return d.name; }));
-  y3.domain([0, d3.max(monthly_data , function(d) { return d.value; })]);
+    x3.domain(monthly_data.map(function(d) { return d.name; }));
+    y3.domain([0, d3.max(monthly_data , function(d) { return d.value; })]);
 
-// Select all g elements, then use the enter() selection to create an element for each data point
-// this also translates each g element - https://github.com/d3/d3-selection#selection_enter
-  xChart3 = chart3.append("g")
-    .attr("class", "x baraxis")
-    .attr("transform", "translate(0," + barHeight3 + ")")
-    .call(xAxis3);
+  // Select all g elements, then use the enter() selection to create an element for each data point
+  // this also translates each g element - https://github.com/d3/d3-selection#selection_enter
+    xChart3 = chart3.append("g")
+      .attr("class", "x baraxis")
+      .attr("transform", "translate(0," + barHeight3 + ")")
+      .call(xAxis3);
 
-  yChart3 = chart.append("g")
-    .attr("class", "y baraxis")
-    .attr("transform", "translate(" + (0) + "," + 270+ ")")
-    .call(yAxis3);
+    yChart3 = chart.append("g")
+      .attr("class", "y baraxis")
+      .attr("transform", "translate(" + (0) + "," + 270+ ")")
+      .call(yAxis3);
 
-  var barChart3 =	chart3.selectAll(".bar")
-    .data(monthly_data)
-    .enter()
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return x3(d.name); })
-    .attr("y", function(d) { return y3(d.value); })
-    .attr("height", function(d) { return barHeight3 - y3(d.value); });
-    //.attr("width", legendWidth);
-    //.attr("width", x3.bandwidth());
-  
-    chart3.append("text")
-    .attr("text-anchor", "middle")  
-    .attr("transform", "translate("+ (barMargin3.left -60) +","+(barHeight3/2)+")rotate(-90)")  
-    .text("Number of Guests");
-    chart3.append("text")
-    .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-    .attr("transform", "translate("+ (barWidth3/2) +","+(barHeight3-170)+")")  // centre below axis
-    .text("Monthly guests data")
-    .style("fill", "#72789e");
+    var barChart3 =	chart3.selectAll(".bar")
+      .data(monthly_data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x3(d.name); })
+      .attr("y", function(d) { return y3(d.value); })
+      .attr("height", function(d) { return barHeight3 - y3(d.value); });
+    barChart3.attr("width", x3.bandwidth());
+    
+      chart3.append("text")
+      .attr("text-anchor", "middle")  
+      .attr("transform", "translate("+ (barMargin3.left -60) +","+(barHeight3/2)+")rotate(-90)")  
+      .text("Number of Guests");
+      chart3.append("text")
+      .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+      .attr("transform", "translate("+ (barWidth3/2) +","+(barHeight3-170)+")")  // centre below axis
+      .text("Monthly guests data")
+      .style("fill", "#72789e");
 
     // =================
     // Color scale legend  based on population
@@ -527,53 +487,53 @@ function draw(whichyear) {
     placeName.html("Area: " + d.properties.province_name) 
     totalPopulation.html("Total Guests: " + d.properties.All) 
 
-  // Prepare province data for bar chart
-  // Types of Accommodation
-  var province_data_acco = [
-    // {name:"Total overnight accommodation", value:d.properties['TOTovernightaccommodation']},
-    {name:"Hotel&youth hostel", value:d.properties["Hotelboardinghouseyouthhostel"]},
-    // {name:"Total leisure accommodation", value:d.properties["TOTLeisureaccommodation"]},
-    {name:"Campsite", value:d.properties["Campsite"]},
-    {name:"Holiday park", value:d.properties["Holidaypark"]},
-    {name:"Group accommodation", value:d.properties["Groupaccommodation"]}
-  ];
+    // Prepare province data for bar chart
+    // Types of Accommodation
+    var province_data_acco = [
+      // {name:"Total overnight accommodation", value:d.properties['TOTovernightaccommodation']},
+      {name:"Hotel&youth hostel", value:d.properties["Hotelboardinghouseyouthhostel"]},
+      // {name:"Total leisure accommodation", value:d.properties["TOTLeisureaccommodation"]},
+      {name:"Campsite", value:d.properties["Campsite"]},
+      {name:"Holiday park", value:d.properties["Holidaypark"]},
+      {name:"Group accommodation", value:d.properties["Groupaccommodation"]}
+    ];
 
-  //foreign countries regions
-  var province_data_vis = [
-    //{name:"the Netherlands", value:d.properties["NL"]},
-    {name:"Germany", value:d.properties["Germany"]},
-    {name:"Belgium", value:d.properties["Belgium"]},
-    {name:"United Kingdom", value:d.properties["UnitedKingdom"]},
-    {name:"France", value:d.properties["France"]},
-    {name:"Switzerland and Liechtenstein", value:d.properties["SwitzerlandandLiechtenstein"]},
-    {name:"Italy", value:d.properties["Italy"]},
-    {name:"Spain", value:d.properties["Spain"]},
-    {name:"Denmark", value:d.properties["Denmark"]},
-    {name:"Sweden", value:d.properties["Sweden"]},
-    {name:"Other countries Euro zone", value:d.properties["OtherEurozone"]},
-    {name:"Other European countries", value:d.properties["OtherEUcountries"]},
-    {name:"America", value:d.properties["America"]},
-    {name:"Asia", value:d.properties["Asia"]},
-    {name:"Australia and Oceania", value:d.properties["AustraliaandOceania"]},
-    {name:"Africa", value:d.properties["Africa"]}
-  ];
-  //guests visit each province on every month
-  var monthly_data_province = [
-    {name: "Jan", value:d.properties["Jan"]},
-    {name: "Feb", value:d.properties["Feb"]},
-    {name: "Mar", value:d.properties["Mar"]},
-    {name: "Apr", value:d.properties["Apr"]},
-    {name: "May", value:d.properties["May"]},
-    {name: "Jun", value:d.properties["Jun"]},
-    {name: "Jul", value:d.properties["Jul"]},
-    {name: "Aug", value:d.properties["Aug"]},
-    {name: "Sep", value:d.properties["Sep"]},
-    {name: "Oct", value:d.properties["Oct"]},
-    {name: "Nov", value:d.properties["Nov"]},
-    {name: "Dec", value:d.properties["Dec"]},
-  ];
+    //foreign countries regions
+    var province_data_vis = [
+      //{name:"the Netherlands", value:d.properties["NL"]},
+      {name:"Germany", value:d.properties["Germany"]},
+      {name:"Belgium", value:d.properties["Belgium"]},
+      {name:"United Kingdom", value:d.properties["UnitedKingdom"]},
+      {name:"France", value:d.properties["France"]},
+      {name:"Switzerland and Liechtenstein", value:d.properties["SwitzerlandandLiechtenstein"]},
+      {name:"Italy", value:d.properties["Italy"]},
+      {name:"Spain", value:d.properties["Spain"]},
+      {name:"Denmark", value:d.properties["Denmark"]},
+      {name:"Sweden", value:d.properties["Sweden"]},
+      {name:"Other countries Euro zone", value:d.properties["OtherEurozone"]},
+      {name:"Other European countries", value:d.properties["OtherEUcountries"]},
+      {name:"America", value:d.properties["America"]},
+      {name:"Asia", value:d.properties["Asia"]},
+      {name:"Australia and Oceania", value:d.properties["AustraliaandOceania"]},
+      {name:"Africa", value:d.properties["Africa"]}
+    ];
+    //guests visit each province on every month
+    var monthly_data_province = [
+      {name: "Jan", value:d.properties["Jan"]},
+      {name: "Feb", value:d.properties["Feb"]},
+      {name: "Mar", value:d.properties["Mar"]},
+      {name: "Apr", value:d.properties["Apr"]},
+      {name: "May", value:d.properties["May"]},
+      {name: "Jun", value:d.properties["Jun"]},
+      {name: "Jul", value:d.properties["Jul"]},
+      {name: "Aug", value:d.properties["Aug"]},
+      {name: "Sep", value:d.properties["Sep"]},
+      {name: "Oct", value:d.properties["Oct"]},
+      {name: "Nov", value:d.properties["Nov"]},
+      {name: "Dec", value:d.properties["Dec"]},
+    ];
 
-  //Update the barchart with province data
+    //Update the barchart with province data
     x.domain(province_data_acco.map(function(d) { return d.name; }));
     y.domain([0, d3.max(province_data_acco , function(d) { return d.value; })]);
     barChart.data(province_data_acco)
