@@ -1,17 +1,15 @@
-# InfoVisProjectGroup6
-
 # NL Tourism Dashboard (2015–2020)
 
 [![Preview of the NL tourism dashboard](./preview.png)](./preview.png)
 
-Interactive D3.js visualization of tourism in the Netherlands (2015–2020).  
+Interactive D3.js visualization of tourism in the Netherlands (2015–2020). 
 Use the year slider to switch datasets, hover provinces to drill down, and compare national vs. provincial patterns. 
 
 The page renders three coordinated views for the selected year:
 
 1. **Choropleth map (provinces)**
    - Provinces are colored by **total guests** (property: `All`).
-   - Hover a province to update all charts + the “Area / Total Guests” labels.
+   - Hover a province to update all charts + the "Area / Total Guests" labels.
 
 2. **Accommodation types (vertical bar chart)**
    - National default: guest totals by accommodation type.
@@ -54,7 +52,7 @@ These files contain:
 - Per-province tourism properties (e.g., `All`, `Germany`, `Hotelboardinghouseyouthhostel`, `Jan`, `Feb`, ...)
 
 ### National totals
-National (“Netherlands as a whole”) totals are embedded in `index.js` as a JSON string (`country_data`) 
+National ("Netherlands as a whole") totals are embedded in `index.js` as a JSON string (`country_data`) 
 
 ## Acknowledgements
 The team consists of Katriel Ester Amanda(@katrielester), Runnan Fu (@runnanfu), and Jing Zhou(@jiczhou). Also, many thanks to the work done by @adboy316, we have learned a lot from his project and are inspired by it.
