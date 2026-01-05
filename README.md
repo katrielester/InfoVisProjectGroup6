@@ -2,8 +2,10 @@
 
 # NL Tourism Dashboard (2015–2020)
 
+[![Preview of the NL tourism dashboard](./preview.png)](./preview.png)
+
 Interactive D3.js visualization of tourism in the Netherlands (2015–2020).  
-Use the year slider to switch datasets, hover provinces to drill down, and compare national vs. provincial patterns.
+Use the year slider to switch datasets, hover provinces to drill down, and compare national vs. provincial patterns. 
 
 The page renders three coordinated views for the selected year:
 
@@ -52,7 +54,7 @@ These files contain:
 - Per-province tourism properties (e.g., `All`, `Germany`, `Hotelboardinghouseyouthhostel`, `Jan`, `Feb`, ...)
 
 ### National totals
-National (“Netherlands as a whole”) totals are embedded in `index.js` as a JSON string (`country_data`) and parsed with:
+National (“Netherlands as a whole”) totals are embedded in `index.js` as a JSON string (`country_data`) 
 
-```js
-var country_values = JSON.parse(country_data);
+## Acknowledgements
+The team consists of Katriel Ester Amanda(@katrielester), Runnan Fu (@runnanfu), and Jing Zhou(@jiczhou). Also, many thanks to the work done by @adboy316, we have learned a lot from his project and are inspired by it.
